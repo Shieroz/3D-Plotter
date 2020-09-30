@@ -6,18 +6,22 @@ using UnityEngine.UI;
 public class MaxColorGradient : MonoBehaviour
 {
     public GameObject manager;
-    public Slider mainSlider;
-    public Text text;
+    public InputField inputField;
+    public Text text, colorBandT1, colorBandT2;
 	
 	public void Start()
 	{
-		//Adds a listener to the main slider and invokes a method when the value changes.
-		mainSlider = GetComponent<Slider>();
-		mainSlider.onValueChanged.AddListener (delegate {ValueChangeCheck ();});
+		text.text = "Gradient: 0 - " + manager.GetComponent<Manager>().maxColorGradient.ToString();
 	}
 
     public void ValueChangeCheck() {
-        manager.GetComponent<Manager>().maxColorGradient = mainSlider.value;
-        text.text = "Max Gradient: " + manager.GetComponent<Manager>().maxColorGradient.ToString();
+        float input = 0;
+        if (float.TryParse(inputField.text, out input)) {
+            input = Mathf.Clamp(input, 0.05f, float.MaxValue); //Clamping input
+            manager.GetComponent<Manager>().maxColorGradient = input;
+            text.text = "Gradient: 0 - " + input.ToString();
+            colorBandT1.text = (input / 2f).ToString();
+            colorBandT2.text = input.ToString();
+        }   
     }
 }

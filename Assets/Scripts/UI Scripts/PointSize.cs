@@ -6,18 +6,19 @@ using UnityEngine.UI;
 public class PointSize : MonoBehaviour
 {
     public GameObject manager;
-    public Slider mainSlider;
+    public InputField inputField;
     public Text text;
 	
 	public void Start()
 	{
-		//Adds a listener to the main slider and invokes a method when the value changes.
-		mainSlider = GetComponent<Slider>();
-		mainSlider.onValueChanged.AddListener (delegate {ValueChangeCheck ();});
+		text.text = "Point Size: " + manager.GetComponent<PointCloudRenderer>().particleSize.ToString();
 	}
 
     public void ValueChangeCheck() {
-        manager.GetComponent<PointCloudRenderer>().particleSize = mainSlider.value;
-        text.text = "Point Size: " + manager.GetComponent<PointCloudRenderer>().particleSize.ToString();
+        float input = 0;
+        if (float.TryParse(inputField.text, out input)) {
+            manager.GetComponent<PointCloudRenderer>().particleSize = input;
+            text.text = "Point Size: " + manager.GetComponent<PointCloudRenderer>().particleSize.ToString();
+        }   
     }
 }

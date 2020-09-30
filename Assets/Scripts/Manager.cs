@@ -33,7 +33,7 @@ public class Manager : MonoBehaviour
             FilePathText.text = "Path does not exist";
             return;
         } catch (Exception e) {
-            FilePathText.text = "Something went wrong with reading the file";
+            FilePathText.text = "Something went wrong when opening the CSV file";
             return;
         }
 
@@ -83,5 +83,9 @@ public class Manager : MonoBehaviour
             b = 1;
         }
         return new Color(r, g, b, a);
+    }
+
+    public static void QuitApplication() {
+        Application.Quit();
     }
 }
